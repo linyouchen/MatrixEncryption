@@ -64,40 +64,7 @@ Cobertura - http://cobertura.sourceforge.net/ Copyright (C) 2003 jcoverage ltd. 
 </fileset>
 </cobertura-instrument>
 </target>
-<target name="decodeFunctionTest" depends="init,compile">
-<junit fork="yes" dir="${basedir}" failureProperty="test.failed">
-<!--
-
-				Note the classpath order: instrumented classes are before the
-				original (uninstrumented) classes.  This is important.
-			
--->
-<classpath location="${instrumented.dir}"/>
-<classpath location="${classes.dir}"/>
-<!--
-
-				The instrumented classes reference classes used by the
-				Cobertura runtime, so Cobertura and its dependencies
-				must be on your classpath.
-			
--->
-<classpath refid="cobertura.classpath"/>
-<formatter type="xml"/>
-<test name="${testcase}" todir="${reports.xml.dir}" if="testcase"/>
-<batchtest todir="${reports.xml.dir}" unless="testcase">
-<fileset dir="${src.dir}">
-<include name="**/*Test.java"/>
-</fileset>
-</batchtest>
-</junit>
-<junitreport todir="${reports.xml.dir}">
-<fileset dir="${reports.xml.dir}">
-<include name="TEST-*.xml"/>
-</fileset>
-<report format="frames" todir="${reports.html.dir}"/>
-</junitreport>
-</target>
-<target name="encodeFunctionTest" depends="init,compile">
+<target name="test" depends="init,compile">
 <junit fork="yes" dir="${basedir}" failureProperty="test.failed">
 <!--
 
