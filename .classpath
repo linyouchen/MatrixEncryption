@@ -5,6 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/EJML"/>
 	<classpathentry kind="lib" path="C:/Users/p9604110/workspace/encoding_v2/lib/jebl-0.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/p9604110/workspace/encoding_v2/lib/mysql-connector-java-5.1.36.jar"/>
+	<classpathentry kind="lib" path="C:/Users/p9604110/workspace/encoding_v2/lib/core-0.27.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
