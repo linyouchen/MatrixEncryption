@@ -80,7 +80,6 @@
 			-->
 			<classpath location="${instrumented.dir}"/>
 			<classpath location="${classes.dir}"/>
-			<classpath path="${java.class.path}"/>
 			<!--
 
 							The instrumented classes reference classes used by the
