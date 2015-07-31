@@ -4,29 +4,6 @@ Cobertura - http://cobertura.sourceforge.net/ Copyright (C) 2003 jcoverage ltd. 
 </description>
 <property name="dist" value="build"/>
 <property file="build.properties"/>
-   <path id="EJML.userclasspath">
-        <pathelement location="../../../../encoding_v2/lib/EJML-core-0.27.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-core-0.27-sources.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-dense64-0.27.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-dense64-0.27-sources.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-denseC64-0.27.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-denseC64-0.27-sources.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-equation-0.27.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-equation-0.27-sources.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-simple-0.27.jar"/>
-        <pathelement location="../../../../encoding_v2/lib/EJML-simple-0.27-sources.jar"/>
-    </path>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
-    </path>
-    <path id="encoding_v2.classpath">
-        <pathelement location="bin"/>
-        <path refid="EJML.userclasspath"/>
-        <pathelement location="lib/jebl-0.4.jar"/>
-        <pathelement location="lib/mysql-connector-java-5.1.36.jar"/>
-        <path refid="JUnit 4.libraryclasspath"/>
-    </path>
 <path id="cobertura.classpath">
 <fileset dir="${cobertura.dir}">
 <include name="cobertura*.jar"/>
