@@ -1,16 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="encoding_v2">
-    <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="D:/LinYC/eclipse/"/>
-    <property name="junit.output.dir" value="junit"/>
-    <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
-    <path id="EJML.userclasspath">
+<project name="cobertura.examples.basic" default="coverage" basedir=".">
+<description>
+Cobertura - http://cobertura.sourceforge.net/ Copyright (C) 2003 jcoverage ltd. Copyright (C) 2005 Mark Doliner <thekingant@users.sourceforge.net> Copyright (C) 2006 Dan Godfrey Cobertura is licensed under the GNU General Public License Cobertura comes with ABSOLUTELY NO WARRANTY
+</description>
+<property name="dist" value="build"/>
+<property file="build.properties"/>
+   <path id="EJML.userclasspath">
         <pathelement location="../../../../encoding_v2/lib/EJML-core-0.27.jar"/>
         <pathelement location="../../../../encoding_v2/lib/EJML-core-0.27-sources.jar"/>
         <pathelement location="../../../../encoding_v2/lib/EJML-dense64-0.27.jar"/>
@@ -33,83 +27,146 @@
         <pathelement location="lib/mysql-connector-java-5.1.36.jar"/>
         <path refid="JUnit 4.libraryclasspath"/>
     </path>
-    <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="clean">
-        <delete dir="bin"/>
-    </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <classpath refid="encoding_v2.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
-    <target name="client">
-        <java classname="encoding_v2.client" failonerror="true" fork="yes">
-            <classpath refid="encoding_v2.classpath"/>
-        </java>
-    </target>
-    <target name="correctnessExp">
-        <java classname="encoding_v2.correctnessExp" failonerror="true" fork="yes">
-            <classpath refid="encoding_v2.classpath"/>
-        </java>
-    </target>
-    <target name="decodeFunctionTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="encoding_v2.decodeFunctionTest" todir="${junit.output.dir}"/>
-            <classpath refid="encoding_v2.classpath"/>
-        </junit>
-    </target>
-    <target name="encodeFunctionTest">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="encoding_v2.encodeFunctionTest" todir="${junit.output.dir}"/>
-            <classpath refid="encoding_v2.classpath"/>
-        </junit>
-    </target>
-    <target name="server">
-        <java classname="encoding_v2.server" failonerror="true" fork="yes">
-            <classpath refid="encoding_v2.classpath"/>
-        </java>
-    </target>
-    <target name="StringSimilarity">
-        <java classname="encoding_v2.StringSimilarity" failonerror="true" fork="yes">
-            <classpath refid="encoding_v2.classpath"/>
-        </java>
-    </target>
-    <target name="junitreport">
-        <junitreport todir="${junit.output.dir}">
-            <fileset dir="${junit.output.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${junit.output.dir}"/>
-        </junitreport>
-    </target>
+<path id="cobertura.classpath">
+<fileset dir="${cobertura.dir}">
+<include name="cobertura*.jar"/>
+<include name="lib/**/*.jar"/>
+</fileset>
+</path>
+<taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
+<target name="init">
+<mkdir dir="${classes.dir}"/>
+<mkdir dir="${instrumented.dir}"/>
+<mkdir dir="${reports.xml.dir}"/>
+<mkdir dir="${reports.html.dir}"/>
+<mkdir dir="${coverage.xml.dir}"/>
+<mkdir dir="${coverage.summaryxml.dir}"/>
+<mkdir dir="${coverage.html.dir}"/>
+</target>
+<target name="compile" depends="init">
+<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes" includeantruntime="false">
+<classpath refid="cobertura.classpath"/>
+</javac>
+<!--  創建放置jar檔目錄  -->
+<mkdir dir="${dist}/lib"/>
+<!--  把build目錄內的所有檔案結構打包成jar檔   -->
+<jar jarfile="${dist}/lib/${ant.project.name}.jar" basedir="bin"/>
+</target>
+<target name="instrument" depends="init,compile">
+<!--
+
+			Remove the coverage data file and any old instrumentation.
+		
+-->
+<delete file="cobertura.ser"/>
+<delete dir="${instrumented.dir}"/>
+<!--
+
+			Instrument the application classes, writing the
+			instrumented classes into ${build.instrumented.dir}.
+		
+-->
+<cobertura-instrument todir="${instrumented.dir}">
+<!--
+
+				The following line causes instrument to ignore any
+				source line containing a reference to slf4j/logback, for the
+				purposes of coverage reporting.
+			
+-->
+<ignore regex="org.slf4j.*"/>
+<fileset dir="${classes.dir}">
+<!--
+
+					Instrument all the application classes, but
+					don't instrument the test classes.
+				
+-->
+<include name="**/*.class"/>
+<exclude name="**/*Test.class"/>
+</fileset>
+</cobertura-instrument>
+</target>
+<target name="test" depends="init,compile">
+<junit fork="yes" dir="${basedir}" failureProperty="test.failed">
+<!--
+
+				Note the classpath order: instrumented classes are before the
+				original (uninstrumented) classes.  This is important.
+			
+-->
+<classpath location="${instrumented.dir}"/>
+<classpath location="${classes.dir}"/>
+<!--
+
+				The instrumented classes reference classes used by the
+				Cobertura runtime, so Cobertura and its dependencies
+				must be on your classpath.
+			
+-->
+<classpath refid="cobertura.classpath"/>
+<formatter type="xml"/>
+<test name="${testcase}" todir="${reports.xml.dir}" if="testcase"/>
+<batchtest todir="${reports.xml.dir}" unless="testcase">
+<fileset dir="${src.dir}">
+<include name="**/*Test.java"/>
+</fileset>
+</batchtest>
+</junit>
+<junitreport todir="${reports.xml.dir}">
+<fileset dir="${reports.xml.dir}">
+<include name="TEST-*.xml"/>
+</fileset>
+<report format="frames" todir="${reports.html.dir}"/>
+</junitreport>
+</target>
+<target name="coverage-check">
+<cobertura-check branchrate="34" totallinerate="100"/>
+</target>
+<target name="coverage-report">
+<!--
+
+			Generate an XML file containing the coverage data using
+			the "srcdir" attribute.
+		
+-->
+<cobertura-report srcdir="${src.dir}" destdir="${coverage.xml.dir}" format="xml"/>
+</target>
+<target name="summary-coverage-report">
+<!--
+
+			Generate an summary XML file containing the coverage data using
+			the "srcdir" attribute.
+		
+-->
+<cobertura-report srcdir="${src.dir}" destdir="${coverage.summaryxml.dir}" format="summaryXml"/>
+</target>
+<target name="alternate-coverage-report">
+<!--
+
+			Generate a series of HTML files containing the coverage
+			data in a user-readable form using nested source filesets.
+		
+-->
+<cobertura-report destdir="${coverage.html.dir}">
+<fileset dir="${src.dir}">
+<include name="**/*.java"/>
+</fileset>
+</cobertura-report>
+</target>
+<target name="jar">
+<jar destfile="build/lib/course.jar" basedir="classes/unitTest_example">
+<manifest>
+<attribute name="Main-class" value="Course"/>
+</manifest>
+</jar>
+</target>
+<target name="clean" description="Remove all files created by the build/test process.">
+<delete dir="${classes.dir}"/>
+<delete dir="${instrumented.dir}"/>
+<delete dir="${reports.dir}"/>
+<delete file="cobertura.log"/>
+<delete file="cobertura.ser"/>
+</target>
+<target name="coverage" depends="compile,instrument,test,coverage-report,summary-coverage-report,alternate-coverage-report, jar" description="Compile, instrument ourself, run the tests and generate JUnit and coverage reports."/>
 </project>
