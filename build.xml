@@ -80,6 +80,7 @@
 			-->
 			<classpath location="${instrumented.dir}"/>
 			<classpath location="${classes.dir}"/>
+			<classpath path="${java.class.path}"/>
 			<!--
 
 							The instrumented classes reference classes used by the
@@ -95,7 +96,7 @@
 				<fileset dir="${src.dir}">
 					<include name="**/*Test.java"/>
 				</fileset>
-				</batchtest>
+			</batchtest>
 		</junit>
 		
 		<junitreport todir="${reports.xml.dir}">
