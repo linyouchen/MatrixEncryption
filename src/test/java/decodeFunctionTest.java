@@ -31,4 +31,15 @@ public class decodeFunctionTest {
 		Assert.assertEquals(expected, password);
 	}
 	
+	@Test
+	public void testSetA(){
+		double[] matrixA = decodeFunction.setA();
+		double[] expected = {
+				1, 0, 0, 0, 
+				-1, 1, 0, 0, 
+				0, -1, 1, 0, 
+				0, 0, -1, 1 };
+		Assert.assertArrayEquals(expected, matrixA, 0.1);
+	}
+	
 }

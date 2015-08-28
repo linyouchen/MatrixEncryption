@@ -35,6 +35,33 @@ public class encodeFunctionTest {
 				82180, 68092, 50482, 143815 };
 		Assert.assertArrayEquals(expected, matrixF);
 	}
+	
+	@Test
+	public void testSetA(){
+		double[] matrixA = encodeFunction.setA();
+		double[] expected = {
+				1, 0, 0, 0, 
+				-1, 1, 0, 0, 
+				0, -1, 1, 0, 
+				0, 0, -1, 1 };
+		Assert.assertArrayEquals(expected, matrixA, 0.1);
+	}
+	
+	@Test
+	public void testSetSigma(){
+		double[] matrixSigma = encodeFunction.setSigma(f);
+		double[] expected = new double[16];
+		
+		for(int i=0; i<16; i++){
+			if(i%5==0){
+				expected[i] = f[i/5];
+			}
+			else{
+				expected[i] = 0;
+			}
+		}
+		Assert.assertArrayEquals(expected, matrixSigma, 0.0001);
+	}
 
 }
 
