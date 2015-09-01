@@ -19,21 +19,21 @@ public class sourcePackage implements Serializable{
 	}
 	
 	
-	double[] getD() 
+	public double[] getD() 
 	{
 		return D;
 	}
-	int[] getF() 
+	public int[] getF() 
 	{
 		return F;
 	}
 
-	void setD(double[] newD)
+	public void setD(double[] newD)
 	{
 		D = newD;
 	}
 	
-	void setF(int[] newF)
+	public void setF(int[] newF)
 	{
 		F = newF;
 	}
