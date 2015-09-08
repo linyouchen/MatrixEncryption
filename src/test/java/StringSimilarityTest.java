@@ -32,6 +32,18 @@ public class StringSimilarityTest {
 		Assert.assertTrue(as == measure.length());
 	}
 	
+	@Test
+	public void testMeasureSimilarity(){
+		String password = "aaabb";
+		int as = 2;
+		test.measureSimilarity(password, as);
+	}
 	
+	@Test
+	public void testRecordString(){
+		String password = "aaabb";
+		int as = 2;
+		test.recordString(password, password.length(), as);
+	}
 
 }
