@@ -8,7 +8,7 @@ import java.io.FileWriter;
 public class orderChange {
 	
 	
-	public static void printOrderChange(int[] origionalArray, double[] encodedArray){
+	public static double printOrderChange(int[] origionalArray, double[] encodedArray){
 		FileWriter fr;
 		int length = origionalArray.length;
 		
@@ -55,12 +55,13 @@ public class orderChange {
 			fr.flush();
 			fr.close();
 			fr = null;
+			return outcome;
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("ERROR"+e.toString());
 			System.exit(0);
 		}
-
+		return 0;
 	}
 }
