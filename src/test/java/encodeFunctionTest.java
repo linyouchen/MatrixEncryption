@@ -1,5 +1,6 @@
 import MatrixEncryption.encodeFunction;
 
+import org.ejml.simple.SimpleMatrix;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -61,6 +62,15 @@ public class encodeFunctionTest {
 			}
 		}
 		Assert.assertArrayEquals(expected, matrixSigma, 0.0001);
+	}
+	
+	@Test
+	public void testRecordStep(){
+		int[] data = {1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,};
+		SimpleMatrix A = new SimpleMatrix(4,4,true, encodeFunction.setA());
+		SimpleMatrix fake = new SimpleMatrix(4,4,true, encodeFunction.setA());
+		double[] D = {0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1};
+		encodeFunction.recordSteps(16, data, A,  fake, D);
 	}
 
 }

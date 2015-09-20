@@ -144,7 +144,7 @@ public class StringSimilarity {
 		    //exception handling left as an exercise for the reader
 		}
 	}
-	
+/*	
 	public static void main(String[] args)
 	{  
 		// connect to database
@@ -171,13 +171,13 @@ public class StringSimilarity {
 						// step 1
 						String rs = experiment.randomStringGenerator(strLength[l], as[v]);
 						// step 2
-						experiment.measureSimilarity(rs, as[v]);
+						//experiment.measureSimilarity(rs, as[v]);
 						// string內可能含有SQL語法字元，存在MySQL會出錯→放到txt檔
-						experiment.recordString(rs, rs.length(), as[v]);
+						//experiment.recordString(rs, rs.length(), as[v]);
 					}
 				}
 			}
 		}
 		
-	}
+	}*/
 }
