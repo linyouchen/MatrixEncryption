@@ -11,7 +11,7 @@ import MatrixEncryption.encodeFunction;
 public class StringSimilarity {
 	public Connection con = null;
 	
-	public void connectDatabase(){
+	public StringSimilarity(){
 		// ³s±µMySQL database
 		try{
 	    	  Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -108,8 +108,7 @@ public class StringSimilarity {
 	}
 
 	public void storeData(int length, int as, double original, double encoded, String password){
-		
-		//connectDatabase();
+
 		
 		try {
 			//Connection con = getConnection();
@@ -150,7 +149,6 @@ public class StringSimilarity {
 	{  
 		// connect to database
 		StringSimilarity experiment = new StringSimilarity();
-		experiment.connectDatabase();
 		
 		// set of string length
 		int[] strLength = {5, 10, 15, 20, 25, 50, 100};
