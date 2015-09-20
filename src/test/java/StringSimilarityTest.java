@@ -52,5 +52,15 @@ public class StringSimilarityTest {
 		//test.measureSimilarity(password, as);
 	}
 	
-
+	@Test
+	public void testStoreData() throws Exception{
+		int stringLength = 5;
+		int as = 2;
+		double originalSimilarity = 0.4;
+		double encodedSimilarity = 0.1;
+		String password = "";
+		StringSimilarity test = mock(StringSimilarity.class);
+		test.storeData(stringLength, as, originalSimilarity, encodedSimilarity, password);
+		
+	}
 }
