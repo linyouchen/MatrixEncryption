@@ -1,15 +1,15 @@
 import MatrixEncryption.StringSimilarity;
 
-
+import static org.mockito.Mockito.*;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 public class StringSimilarityTest {
-	StringSimilarity test = new StringSimilarity();
 	
 	@Test
 	public void testRandomStringGenerator() {
+		StringSimilarity test = new StringSimilarity();
 		int length = 5;
 		int as = 2;
 		String rs = test.randomStringGenerator(length, as);
@@ -33,17 +33,24 @@ public class StringSimilarityTest {
 	}
 	
 	@Test
-	public void testMeasureSimilarity(){
-		String password = "aaabb";
-		int as = 2;
-		test.measureSimilarity(password, as);
-	}
-	
-	@Test
 	public void testRecordString(){
+		StringSimilarity test = new StringSimilarity();
 		String password = "aaabb";
 		int as = 2;
 		test.recordString(password, password.length(), as);
 	}
+	
+	@Test
+	public void testMeasureSimilarity() throws Exception{
+
+		String password = "aaabb";
+		int as = 2;
+		StringSimilarity test = mock(StringSimilarity.class);
+		test.measureSimilarity(password, as);
+		//StringSimilarity test = new StringSimilarity();
+		
+		//test.measureSimilarity(password, as);
+	}
+	
 
 }
