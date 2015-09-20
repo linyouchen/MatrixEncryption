@@ -9,9 +9,9 @@ import java.io.*;
 import MatrixEncryption.encodeFunction;
 
 public class StringSimilarity {
-	private Connection con = null;
+	public Connection con = null;
 	
-	public StringSimilarity(){
+	public void connectDatabase(){
 		// 連接MySQL database
 		try{
 	    	  Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -108,6 +108,9 @@ public class StringSimilarity {
 	}
 
 	public void storeData(int length, int as, double original, double encoded, String password){
+		
+		//connectDatabase();
+		
 		try {
 			//Connection con = getConnection();
 			Statement state = null;
@@ -147,19 +150,20 @@ public class StringSimilarity {
 	{  
 		// connect to database
 		StringSimilarity experiment = new StringSimilarity();
+		experiment.connectDatabase();
 		
 		// set of string length
 		int[] strLength = {5, 10, 15, 20, 25, 50, 100};
 		// set of alphabets
 		int[] as = {1, 2, 3, 5, 10};
 		
-		/* ---------------------實--驗---開--始---------------------- *
-		 * Step 1(generate string): 依照as數隨機產生Strings
-		 * Step 2(measure similarity): 
-		 * 		a. 將String轉成ASCII integer array
-		 * 		b. encode the string(array)
-		 * 		(分別將a, b的output作similarity計算，然後將實驗結果丟到MySQL)
-		 * ----------------------開-心-地-結-束----------------------- */	
+		//* ---------------------實--驗---開--始---------------------- *
+		//* Step 1(generate string): 依照as數隨機產生Strings
+		//* Step 2(measure similarity): 
+		//* 		a. 將String轉成ASCII integer array
+		//* 		b. encode the string(array)
+		//* 		(分別將a, b的output作similarity計算，然後將實驗結果丟到MySQL)
+		//* ----------------------開-心-地-結-束----------------------- 
 		
 		for(int l=0; l<strLength.length; l++){
 			for(int v=0; v<as.length;v++){
